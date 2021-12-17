@@ -2,6 +2,7 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import scrapeIDGloss from './library/scrape-idgloss.mjs'
 import scrapeTagsList from './library/scrape-tags-list.mjs'
+import scrapeTag from './library/scrape-tag-page.mjs'
 import fs from 'fs-extra'
 import path from 'path'
 import yaml from 'yaml'
@@ -41,6 +42,18 @@ async function run () {
     process.stdout.write(yaml.stringify({ type: 'tags-list', output }) + '...\n')
     await fs.ensureDir(path.join(argv.storage, 'id-gloss'))
     await fs.writeFile(path.join(argv.storage, 'tags-list.yaml'), yaml.stringify(output))
+  }
+
+  // scrape specific tag as requested
+  for (const tagName of (argv.tag || [])) {
+    const output = await scrapeTag(argv, tagName)
+    if (output) {
+      process.stdout.write(yaml.stringify({ type: 'tag', output }) + '...\n')
+      await fs.ensureDir(path.join(argv.storage, 'tag'))
+      await fs.writeFile(path.join(argv.storage, 'tag', sanitize(`${output.tag}.yaml`, { replacement: encodeURIComponent })), yaml.stringify(output))
+    } else {
+      console.error('tag results not available:', tagName)
+    }
   }
 
   // scrape any individual id-glosses specified

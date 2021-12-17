@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+
+
+
+<html>
+  <head>
+      <title>Signbank</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.df2756479369.css"  media="screen">
+      <link rel="stylesheet" type="text/css" href="/static/css/style.c33f44540440.css">
+      <link rel="stylesheet" type="text/css" href="/static/css/auslan.4e8d791d57b5.css">
+      <link rel="shortcut icon" type="image/png" href="/static/images/favicon.873e9f27cf6a.png"/>
+    
+  </head>
+  <body>
+
+    <div id='wrap'>
+        <div class="container">
+            <div id="leftcontentborder"></div>
+            <div id="rightcontentborder"></div>
+            <!-- <ul class='nav navbar-nav navbar-right'> -->
+            <ul id="login">
+			    
+			       <li><a href="/accounts/login/?next=/">Login</a></li>
+			    
+		    </ul>
+            <div id='header'><h1>Signbank</h1>
+                <div id='logoholder' class='visible-lg visible-md visible-sm'></div>
+            </div>
+
+            <div id='bslstripe'></div>
+
+
+
+        <nav id='navbar' class="navbar navbar-default" role="navigation">
+
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+    
+    
+        
+        <li><a href="/">Home</a></li>
+      
+    
+        
+        <li class='dropdown'>
+             <a href="/about/"  class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+             <ul class="dropdown-menu">
+             
+                <li ><a href="/about/classes/">Classes</a></li>
+             
+                <li ><a href="/about/community/">Community</a></li>
+             
+                <li ><a href="/about/history/">History</a></li>
+             
+                <li ><a href="/about/links/">Links</a></li>
+             
+                <li ><a href="/about/acknowledgements/">Acknowledgements</a></li>
+             
+             </ul>
+        </li>
+      
+    
+        
+        <li class='dropdown'>
+             <a href="/research/"  class="dropdown-toggle" data-toggle="dropdown">Research <b class="caret"></b></a>
+             <ul class="dropdown-menu">
+             
+                <li ><a href="/research/about/">About Research</a></li>
+             
+                <li ><a href="/about/grammar/">Grammar</a></li>
+             
+                <li ><a href="/about/corpus/">Corpus</a></li>
+             
+             </ul>
+        </li>
+      
+    
+        
+        <li><a href="/about/dictionary/">Dictionary</a></li>
+      
+    
+    </ul>
+
+    <ul class='nav navbar-nav'>
+        <li class='dropdown'>
+            <a href="#" class='dropdown-toggle' data-toggle='dropdown'>Signbank <b class="caret"></b></a>
+            <ul class='dropdown-menu'>
+                <li><a href="/dictionary/">Dictionary</a></li>
+                
+                <li><a href="/numbersigns.html">Number Signs</a></li>
+                
+                
+                
+                
+                
+                <li><a href="/spell/twohanded.html">Finger Spelling</a></li>
+                
+                <li id="extrafeedback"><a href="/feedback/generalfeedback/">Help build Signbank</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    
+    <ul class='nav navbar-nav'>
+        <li class='dropdown'>
+            <a href="#" class='dropdown-toggle' data-toggle='dropdown'>Share <b class="caret"></b></a>
+            <ul class='dropdown-menu'>
+                
+                <li><a href="http://twitter.com/share?text=%20%23auslansignbank&url=http%3A//auslan.org.au/dictionary/tag/semantic%3Asensing/"><img src="/static/images/social/twitter.png" alt="Twitter"> Share on Twitter</a></li>
+                
+                
+                <li><a href="http://facebook.com/sharer.php?u=http%3A//auslan.org.au/dictionary/tag/semantic%3Asensing/"><img src="/static/images/social/facebook.png" alt="facebook"> Share on Facebook</a></li>
+                
+                
+                
+            </ul>
+        </li>
+    </ul>
+    
+
+    
+    <ul class='nav navbar-nav navbar-right'>
+        <li><a href="/dictionary/search/"><strong>Dialect Preference:</strong>
+            <span id='nav_dialect'>Australia Wide</span></a></li>
+        <li>
+            <form class="navbar-form" role="search" id="frmSearch" name="frmSearch" method="get" action="/dictionary/search">
+                <div class="input-group" style='width:300px'>
+                    <input type="text" name="query" class="form-control" placeholder="keyword" maxlength="100" id="id_menu_query">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                    <select name="category" class="form-control" id="id_menu_category">
+  <option value="all">All</option>
+
+  <option value="semantic:health">Health</option>
+
+  <option value="semantic:education">Education</option>
+
+  <option value="semantic:animal">Animal</option>
+
+  <option value="semantic:arithmetic">Arithmetic</option>
+
+  <option value="semantic:arts">Arts</option>
+
+  <option value="semantic:bodypart">Body Part</option>
+
+  <option value="semantic:car">Car</option>
+
+  <option value="semantic:city">City</option>
+
+  <option value="semantic:clothing">Clothing</option>
+
+  <option value="semantic:color">Color</option>
+
+  <option value="semantic:cooking">Cooking</option>
+
+  <option value="semantic:day">Day</option>
+
+  <option value="semantic:deaf">Deaf</option>
+
+  <option value="semantic:drink">Drink</option>
+
+  <option value="semantic:family">Family</option>
+
+  <option value="semantic:feel">Feel</option>
+
+  <option value="semantic:food">Food</option>
+
+  <option value="semantic:furniture">Furniture</option>
+
+  <option value="semantic:government">Government</option>
+
+  <option value="semantic:groom">Groom</option>
+
+  <option value="semantic:judge">Judge</option>
+
+  <option value="semantic:language act">Language act</option>
+
+  <option value="semantic:law">Law</option>
+
+  <option value="semantic:material">Material</option>
+
+  <option value="semantic:metalg">Metalg</option>
+
+  <option value="semantic:mind">Mind</option>
+
+  <option value="semantic:money">Money</option>
+
+  <option value="semantic:nature">Nature</option>
+
+  <option value="semantic:number">Number</option>
+
+  <option value="semantic:order">Order</option>
+
+  <option value="semantic:people">People</option>
+
+  <option value="semantic:physical act">Physical act</option>
+
+  <option value="semantic:quality">Quality</option>
+
+  <option value="semantic:quantity">Quantity</option>
+
+  <option value="semantic:question">Question</option>
+
+  <option value="semantic:recreation">Recreation</option>
+
+  <option value="semantic:rooms">Rooms</option>
+
+  <option value="semantic:salutation">Salutation</option>
+
+  <option value="semantic:sensing">Sensing</option>
+
+  <option value="semantic:sexuality">Sexuality</option>
+
+  <option value="semantic:shapes">Shapes</option>
+
+  <option value="semantic:shopping">Shopping</option>
+
+  <option value="semantic:sport">Sport</option>
+
+  <option value="semantic:telecommunications">Telecommunications</option>
+
+  <option value="semantic:time">Time</option>
+
+  <option value="semantic:travel">Travel</option>
+
+  <option value="semantic:utensil">Utensil</option>
+
+  <option value="semantic:weather">Weather</option>
+
+  <option value="semantic:work">Work</option>
+
+</select>
+                </div>
+            </form>
+        </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+
+        
+
+
+
+        <div role='main'>
+        
+<div class="container">
+<div class='row' id='tags'>
+  
+  <div class='tag'><strong>b92</strong></div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/b92:directional/">directional</a></span>
+        <span class='tagcount'>625</span>
+      </div>
+    
+  
+  <div class='tag'><strong>corpus</strong></div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/corpus:attested/">attested</a></span>
+        <span class='tagcount'>229</span>
+      </div>
+    
+  
+  <div class='tag'><strong>iconicity</strong></div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/iconicity:obscure/">obscure</a></span>
+        <span class='tagcount'>912</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/iconicity:opaque/">opaque</a></span>
+        <span class='tagcount'>482</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/iconicity:translucent/">translucent</a></span>
+        <span class='tagcount'>801</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/iconicity:transparent/">transparent</a></span>
+        <span class='tagcount'>134</span>
+      </div>
+    
+  
+  <div class='tag'><strong>lexis</strong></div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:classifier/">classifier</a></span>
+        <span class='tagcount'>7</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:crude/">crude</a></span>
+        <span class='tagcount'>30</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:doubtlex/">doubtlex</a></span>
+        <span class='tagcount'>107</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:fingerspell/">fingerspell</a></span>
+        <span class='tagcount'>482</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:gensign/">gensign</a></span>
+        <span class='tagcount'>236</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:marginal/">marginal</a></span>
+        <span class='tagcount'>132</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:obsolete/">obsolete</a></span>
+        <span class='tagcount'>120</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:proper%20name/">proper name</a></span>
+        <span class='tagcount'>184</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:regional/">regional</a></span>
+        <span class='tagcount'>435</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:restricted%20lexeme/">restricted lexeme</a></span>
+        <span class='tagcount'>140</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:signed%20english/">signed english</a></span>
+        <span class='tagcount'>2636</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:signed%20english%20only/">signed english only</a></span>
+        <span class='tagcount'>695</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:technical/">technical</a></span>
+        <span class='tagcount'>124</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/lexis:varlex/">varlex</a></span>
+        <span class='tagcount'>1708</span>
+      </div>
+    
+  
+  <div class='tag'><strong>morph</strong></div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/morph:begin%20directional%20sign/">begin directional sign</a></span>
+        <span class='tagcount'>53</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/morph:body%20locating/">body locating</a></span>
+        <span class='tagcount'>42</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/morph:directional%20sign/">directional sign</a></span>
+        <span class='tagcount'>159</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/morph:end%20directional%20sign/">end directional sign</a></span>
+        <span class='tagcount'>124</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/morph:locational%20and%20directional/">locational and directional</a></span>
+        <span class='tagcount'>62</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/morph:orientating%20sign/">orientating sign</a></span>
+        <span class='tagcount'>330</span>
+      </div>
+    
+  
+  <div class='tag'><strong>phonology</strong></div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/phonology:alternating/">alternating</a></span>
+        <span class='tagcount'>214</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/phonology:dominant%20hand%20only/">dominant hand only</a></span>
+        <span class='tagcount'>1972</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/phonology:double%20handed/">double handed</a></span>
+        <span class='tagcount'>2629</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/phonology:forearm%20rotation/">forearm rotation</a></span>
+        <span class='tagcount'>1</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/phonology:handshape%20change/">handshape change</a></span>
+        <span class='tagcount'>4</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/phonology:onehand/">onehand</a></span>
+        <span class='tagcount'>2769</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/phonology:parallel/">parallel</a></span>
+        <span class='tagcount'>703</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/phonology:symmetrical/">symmetrical</a></span>
+        <span class='tagcount'>1667</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/phonology:two%20handed/">two handed</a></span>
+        <span class='tagcount'>1741</span>
+      </div>
+    
+  
+  <div class='tag'><strong>religion</strong></div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/religion:catholic/">catholic</a></span>
+        <span class='tagcount'>27</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/religion:catholic%20school/">catholic school</a></span>
+        <span class='tagcount'>22</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/religion:jehovas%20witness/">jehovas witness</a></span>
+        <span class='tagcount'>5</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/religion:other/">other</a></span>
+        <span class='tagcount'>16</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/religion:religion/">religion</a></span>
+        <span class='tagcount'>122</span>
+      </div>
+    
+  
+  <div class='tag'><strong>None</strong></div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/school/">school</a></span>
+        <span class='tagcount'>1</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/state/">state</a></span>
+        <span class='tagcount'>1</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/state%20school/">state school</a></span>
+        <span class='tagcount'>27</span>
+      </div>
+    
+  
+  <div class='tag'><strong>school</strong></div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/school:state%20school/">state school</a></span>
+        <span class='tagcount'>2</span>
+      </div>
+    
+  
+  <div class='tag'><strong>semantic</strong></div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:animal/">animal</a></span>
+        <span class='tagcount'>122</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:arithmetic/">arithmetic</a></span>
+        <span class='tagcount'>117</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:arts/">arts</a></span>
+        <span class='tagcount'>51</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:bodypart/">bodypart</a></span>
+        <span class='tagcount'>91</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:car/">car</a></span>
+        <span class='tagcount'>143</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:city/">city</a></span>
+        <span class='tagcount'>147</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:clothing/">clothing</a></span>
+        <span class='tagcount'>118</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:color/">color</a></span>
+        <span class='tagcount'>54</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:cooking/">cooking</a></span>
+        <span class='tagcount'>139</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:day/">day</a></span>
+        <span class='tagcount'>7</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:deaf/">deaf</a></span>
+        <span class='tagcount'>38</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:drink/">drink</a></span>
+        <span class='tagcount'>89</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:education/">education</a></span>
+        <span class='tagcount'>452</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:family/">family</a></span>
+        <span class='tagcount'>54</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:feel/">feel</a></span>
+        <span class='tagcount'>89</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:food/">food</a></span>
+        <span class='tagcount'>146</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:furniture/">furniture</a></span>
+        <span class='tagcount'>61</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:government/">government</a></span>
+        <span class='tagcount'>127</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:groom/">groom</a></span>
+        <span class='tagcount'>43</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:health/">health</a></span>
+        <span class='tagcount'>634</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:judge/">judge</a></span>
+        <span class='tagcount'>96</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:language%20act/">language act</a></span>
+        <span class='tagcount'>97</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:law/">law</a></span>
+        <span class='tagcount'>40</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:material/">material</a></span>
+        <span class='tagcount'>23</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:metalg/">metalg</a></span>
+        <span class='tagcount'>172</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:mind/">mind</a></span>
+        <span class='tagcount'>79</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:money/">money</a></span>
+        <span class='tagcount'>69</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:nature/">nature</a></span>
+        <span class='tagcount'>27</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:number/">number</a></span>
+        <span class='tagcount'>68</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:order/">order</a></span>
+        <span class='tagcount'>42</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:people/">people</a></span>
+        <span class='tagcount'>138</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:physical%20act/">physical act</a></span>
+        <span class='tagcount'>99</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:quality/">quality</a></span>
+        <span class='tagcount'>70</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:quantity/">quantity</a></span>
+        <span class='tagcount'>67</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:question/">question</a></span>
+        <span class='tagcount'>19</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:recreation/">recreation</a></span>
+        <span class='tagcount'>53</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:rooms/">rooms</a></span>
+        <span class='tagcount'>35</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:salutation/">salutation</a></span>
+        <span class='tagcount'>12</span>
+      </div>
+    
+      <div class='tag' id='activetag'>
+        <span class='tagname'><a href="/dictionary/tag/semantic:sensing/">sensing</a></span>
+        <span class='tagcount'>25</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:sexuality/">sexuality</a></span>
+        <span class='tagcount'>58</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:shapes/">shapes</a></span>
+        <span class='tagcount'>24</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:shopping/">shopping</a></span>
+        <span class='tagcount'>49</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:sport/">sport</a></span>
+        <span class='tagcount'>172</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:telecommunications/">telecommunications</a></span>
+        <span class='tagcount'>54</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:time/">time</a></span>
+        <span class='tagcount'>92</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:travel/">travel</a></span>
+        <span class='tagcount'>91</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:utensil/">utensil</a></span>
+        <span class='tagcount'>83</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:weather/">weather</a></span>
+        <span class='tagcount'>34</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/semantic:work/">work</a></span>
+        <span class='tagcount'>168</span>
+      </div>
+    
+  
+  <div class='tag'><strong>workflow</strong></div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/workflow:needs%20video/">needs video</a></span>
+        <span class='tagcount'>964</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/workflow:problematic/">problematic</a></span>
+        <span class='tagcount'>666</span>
+      </div>
+    
+      <div class='tag' >
+        <span class='tagname'><a href="/dictionary/tag/workflow:redo%20video/">redo video</a></span>
+        <span class='tagcount'>785</span>
+      </div>
+    
+  
+</div>
+
+  <div class="row">
+        <p>Items marked * below are not in the web version of the dictionary and would not
+        appear in a regular (public) search.</p>
+
+
+      <div id="searchresults">
+         <table width="90%">
+            <tr>
+               <td valign="top">
+          
+            <p>
+              <a href="/dictionary/gloss/deaf-and-dumb1a.html">deaf-and-dumb1a</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/explore.html">explore</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/feel1a.html">feel1a</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/flavour.SE.html">flavour.SE</a>
+              *
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/fragrance1a.html">fragrance1a</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/fragrance1b.html">fragrance1b</a>
+              *
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/hear-of1a.html">hear-of1a</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/hear.cup.html">hear.cup</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/look1a.html">look1a</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/notice-see.html">notice-see</a>
+              
+            </p>
+
+            
+            </td>
+            <td valign="top">
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/observe.html">observe</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/pong.html">pong</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/search.html">search</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/see1a.html">see1a</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/sense1a.html">sense1a</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/sight1a.html">sight1a</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/smell-bad.html">smell-bad</a>
+              *
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/smell.WA.html">smell.WA</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/smell1a.html">smell1a</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/sound.html">sound</a>
+              
+            </p>
+
+            
+            </td>
+            <td valign="top">
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/taste.html">taste</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/taste-bad.html">taste-bad</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/touch1a.html">touch1a</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/view1a.html">view1a</a>
+              
+            </p>
+
+            
+
+          
+            <p>
+              <a href="/dictionary/gloss/vision.html">vision</a>
+              
+            </p>
+
+            
+
+          
+           </td>
+          </tr>
+         </table>
+
+          
+      </div>
+  </div>
+
+        </div>
+
+        </div>
+    </div>
+
+    <div id="footer">
+       <div class='container'>
+          <div id="copyright">
+            <div id="notice">
+            	<!--
+              	<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+              	<img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />
+              	-->
+              <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Dataset" property="dct:title" rel="dct:type">This Signbank</span> is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons BY-NC-ND 4.0</a>.
+            </div>
+          </div>
+          <div id="feedback">
+          	<a href="/feedback/generalfeedback/">Feedback</a>
+          </div>
+       </div>
+    </div>
+
+    <script src="/static/js/jquery-1.11.0.min.8fc25e27d427.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.ba847811448e.js"></script>
+
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf-8" src="/static/js/jquery.dataTables.min.f1e6c13d3982.js"></script>
+
+    <script src="/static/js/signbank.351f40c88af9.js"></script>
+
+    
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-3928964-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+  </body>
+</html>
