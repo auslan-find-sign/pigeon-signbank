@@ -4,7 +4,7 @@
   "description": "An Auslan Signbank spider, which gathers data from auslan.org.au and potentially similar signbank instances internationally, and outputs YAML files, as well as a converter which produces search-data compatible with find sign",
   "main": "index.mjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./tests/test-*.mjs"
   },
   "author": "Phoenix Fox",
   "license": "Unlicense",
@@ -18,5 +18,10 @@
     "uri-tag": "^1.4.1",
     "yaml": "^1.10.2",
     "yargs": "^17.3.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.3",
+    "nock": "^13.2.1"
   }
 }
