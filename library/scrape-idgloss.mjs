@@ -60,7 +60,7 @@ export default async function scrapeIDGloss (config, idgloss) {
   const videoURLs = selectAll(doc, 'video source').map(source => relativeLink(pageURL, get.attribute(source, 'src')))
 
   const output = {
-    idGloss: filenameFromURL(pageURL, '.html'),
+    idGloss: decodeURIComponent(filenameFromURL(pageURL, '.html')),
     pageURL: pageURL,
     keywords,
     regionImages,
