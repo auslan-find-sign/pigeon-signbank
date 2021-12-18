@@ -6,7 +6,7 @@ const defaultOptions = {
 
 export async function timedFetch (url, init = {}) {
   // AbortController was added in node v14.17.0 globally
-  const AbortController = globalThis.AbortController || await import('abort-controller')
+  const AbortController = globalThis.AbortController || (await import('abort-controller')).AbortController
 
   const controller = new AbortController()
   const timeout = setTimeout(() => {
