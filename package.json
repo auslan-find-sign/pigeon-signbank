@@ -11,6 +11,7 @@
   "dependencies": {
     "cross-fetch": "^3.1.4",
     "fs-extra": "^10.0.0",
+    "parse-duration": "^1.0.2",
     "pigeonmark-html": "^1.0.1",
     "pigeonmark-select": "^1.0.0",
     "pigeonmark-utils": "^1.0.4",
