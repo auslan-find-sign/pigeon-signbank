@@ -35,14 +35,8 @@ export async function scrapeTagPage (config, tag, pageNum) {
   if (!response.ok) return undefined
   const doc = HTML.decode(await response.text())
 
-  const activeTag = selectOne(doc, '#activetag a')
-  if (!activeTag) {
-    // this tag doesn't actually exist
-    return undefined
-  }
-
   return {
-    tag: decodeURIComponent(get.attribute(activeTag, 'href').match(/\/dictionary\/tag\/([^/]+)\//i)[1]),
+    tag: tag,
     pageNum: parseInt(get.text(selectOne(doc, '#searchresults > p > strong') || '1')),
     totalPages: Math.max(1, ...selectAll(doc, '#searchresults > p > *').map(x => parseInt(get.text(x)))),
     publicGlosses: selectAll(doc, '#searchresults > table p:not(:contains("*")) > a').map(a =>

@@ -46,8 +46,12 @@ describe('library/scrape-tag-page', () => {
     expect(await scrapeTagPage(config, 'error')).to.equal(undefined)
   })
 
-  it('returns undefined for non-existant 200 status tag pages', async () => {
+  it('returns correct results for an empty tag page', async () => {
     nockup('https://auslan.org.au/dictionary/tag/SEMANTIC/?query=&page=1')
-    expect(await scrapeTagPage(config, 'SEMANTIC')).to.equal(undefined)
+    expect(await scrapeTagPage(config, 'SEMANTIC')).to.deep.equal({
+      tag: 'SEMANTIC',
+      publicGlosses: [],
+      privateGlosses: []
+    })
   })
 })
