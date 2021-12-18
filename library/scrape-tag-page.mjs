@@ -36,6 +36,10 @@ export async function scrapeTagPage (config, tag, pageNum) {
   const doc = HTML.decode(await response.text())
 
   const activeTag = selectOne(doc, '#activetag a')
+  if (!activeTag) {
+    // this tag doesn't actually exist
+    return undefined
+  }
 
   return {
     tag: decodeURIComponent(get.attribute(activeTag, 'href').match(/\/dictionary\/tag\/([^/]+)\//i)[1]),

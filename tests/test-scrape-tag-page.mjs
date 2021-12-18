@@ -45,4 +45,9 @@ describe('library/scrape-tag-page', () => {
     nock(config.url).get('/dictionary/tag/error/?query=&page=1').reply(500)
     expect(await scrapeTagPage(config, 'error')).to.equal(undefined)
   })
+
+  it('returns undefined for non-existant 200 status tag pages', async () => {
+    nockup('https://auslan.org.au/dictionary/tag/SEMANTIC/?query=&page=1')
+    expect(await scrapeTagPage(config, 'SEMANTIC')).to.equal(undefined)
+  })
 })
