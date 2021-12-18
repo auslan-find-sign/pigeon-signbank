@@ -20,8 +20,13 @@ describe('library/scrape-idgloss', () => {
 
   it('scrapes a single id-gloss page', async () => {
     await nockup('https://auslan.org.au/dictionary/gloss/anything1a.html')
+    // mockup the video head request too
+    nock('https://media.auslan.org.au/').head('/mp4video/28/28000_1.mp4').reply(200, '', {
+      'Last-Modified': 'Tue, 08 Dec 2020 06:23:52 GMT'
+    })
 
     expect(await scrapeIDGloss(config, 'anything1a')).to.deep.equal({
+      signNumber: 1877,
       idGloss: 'anything1a',
       pageURL: 'https://auslan.org.au/dictionary/gloss/anything1a.html',
       keywords: ['whatever', 'any', 'anything', 'anyway', 'anywhere', 'anytime', 'anyone', 'anything'],

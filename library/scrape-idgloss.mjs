@@ -49,33 +49,37 @@ export default async function scrapeIDGloss (config, idgloss) {
   const response = await fetch(pageURL)
   if (!response.ok) return undefined
   const doc = HTML.decode(await response.text())
+  const main = selectOne(doc, 'div[role=main]')
+  const signinfo = selectOne(main, 'div#signinfo')
+  const defblock = selectOne(main, 'div#definitionblock')
 
   // get string list of keywords
-  const keywordsString = get.text(selectOne(doc, '#keywords')).replace(/[\n\t ]+/g, ' ').trim().split(': ')[1]
+  const keywordsString = get.text(selectOne(defblock, '#keywords')).replace(/[\n\t ]+/g, ' ').trim().split(': ')[1]
   const keywords = extractWords(keywordsString)
 
   // note down any region images
-  const regionImages = selectAll(doc, '#states img').map(image => relativeLink(pageURL, get.attribute(image, 'src')))
+  const regionImages = selectAll(defblock, '#states img').map(image => relativeLink(pageURL, get.attribute(image, 'src')))
 
   // extract video urls
-  const videoURLs = selectAll(doc, 'video source').map(source => relativeLink(pageURL, get.attribute(source, 'src')))
+  const videoURLs = selectAll(defblock, 'video source').map(source => relativeLink(pageURL, get.attribute(source, 'src')))
 
   const output = {
+    signNumber: parseInt(get.text(selectOne(signinfo, 'button.btn.navbar-btn:contains("Sign"):contains("of")')).trim().slice(5)),
     idGloss: decodeURIComponent(filenameFromURL(pageURL, '.html')),
     pageURL: pageURL,
     keywords,
     regionImages,
     signDemonstrations: videoURLs.filter(obj => !obj.match(/Definition/)),
     signedDefinitions: videoURLs.filter(obj => obj.match(/Definition/)),
-    writtenDefinitions: selectAll(doc, 'div.definition-panel').map(panel => {
+    writtenDefinitions: selectAll(defblock, 'div.definition-panel').map(panel => {
       const title = get.text(selectOne(panel, 'h3.panel-title')).trim()
 
       const entryDivs = selectAll(panel, 'div.definition-entry > div')
       const entries = entryDivs.map(div => get.childNodes(div).filter(x => get.type(x) === 'text').map(x => get.text(x).trim()).join(' ').trim())
       return { title, entries }
     }),
-    previousSign: filenameFromURL(relativeLink(pageURL, get.attribute(selectOne(doc, 'a.btn:contains("Previous Sign")'), 'href')), '.html'),
-    nextSign: filenameFromURL(relativeLink(pageURL, get.attribute(selectOne(doc, 'a.btn:contains("Next Sign")'), 'href')), '.html')
+    previousSign: filenameFromURL(relativeLink(pageURL, get.attribute(selectOne(signinfo, 'a.btn:contains("Previous Sign")'), 'href')), '.html'),
+    nextSign: filenameFromURL(relativeLink(pageURL, get.attribute(selectOne(signinfo, 'a.btn:contains("Next Sign")'), 'href')), '.html')
   }
 
   // discover timestamp from Last Modified header on video
