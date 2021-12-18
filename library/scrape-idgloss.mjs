@@ -1,20 +1,9 @@
-import fetch from 'cross-fetch'
+import fetch from './fetch.mjs'
 import { get } from 'pigeonmark-utils'
 import { selectAll, selectOne } from 'pigeonmark-select'
 import HTML from 'pigeonmark-html'
 import * as urlRoutes from './url-routes.mjs'
 import './array-at-polyfill.mjs'
-
-// polyfill Array#at() on old platforms
-// if (!Array.prototype.at) {
-//   // eslint-disable-next-line no-extend-native
-//   Object.defineProperty(Array.prototype, 'at', {
-//     value: function (index) {
-//       const O = Object(this)
-//       return (index < 0) ? O[O.length + index] : O[index]
-//     }
-//   })
-// }
 
 // takes in the current page URL as a string, and a link url, and combines them, returning a new string url
 // which accurately calculates any relative paths with path fragment hrefs

@@ -1,4 +1,4 @@
-import fetch from 'cross-fetch'
+import fetch from './fetch.mjs'
 import * as urlRoutes from './url-routes.mjs'
 
 /**

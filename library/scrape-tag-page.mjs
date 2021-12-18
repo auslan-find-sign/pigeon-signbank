@@ -1,4 +1,4 @@
-import fetch from 'cross-fetch'
+import fetch from './fetch.mjs'
 import { get } from 'pigeonmark-utils'
 import { selectAll, selectOne } from 'pigeonmark-select'
 import HTML from 'pigeonmark-html'
@@ -31,7 +31,7 @@ function filenameFromURL (url, extension = '.html') {
  */
 export async function scrapeTagPage (config, tag, pageNum) {
   const pageURL = urlRoutes.tagPage(config, tag, pageNum)
-  const response = await fetch(pageURL, { headers: { 'user-agent': '@auslan-find-sign/pigeon-signbank' } })
+  const response = await fetch(pageURL)
   if (!response.ok) return undefined
   const doc = HTML.decode(await response.text())
 
