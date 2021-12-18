@@ -32,39 +32,64 @@ const { argv } = yargs(hideBin(process.argv))
     alias: 's',
     type: 'string',
     default: './signbank-data',
+    coerce: (basePath) => {
+      const storagePath = path.resolve(basePath)
+      return {
+        base: storagePath,
+        path (...args) {
+          return path.join(storagePath, ...args.map(x => sanitize(`${x}`, { replacement: encodeURIComponent })))
+        }
+      }
+    },
     description: 'filesystem location to store signbank spider output'
   })
+
+async function fetchTagsList (config) {
+  const output = await scrapeTagsList(config)
+  process.stdout.write(yaml.stringify({ type: 'tags-list', output }) + '...\n')
+  await fs.ensureDir(config.storage.path())
+  await fs.writeFile(config.storage.path('tags-list.yaml'), yaml.stringify(output))
+  return output
+}
+
+async function fetchTagGraph (config, tag) {
+  const output = await scrapeTag(config, tag)
+  if (output) {
+    process.stdout.write(yaml.stringify({ type: 'tag', output }) + '...\n')
+    await fs.ensureDir(config.storage.path('tag'))
+    await fs.writeFile(config.storage.path('tag', `${output.tag}.yaml`), yaml.stringify(output))
+  } else {
+    console.error('tag results not available:', tag)
+  }
+  return output
+}
+
+async function fetchIDGloss (config, idGloss) {
+  const output = await scrapeIDGloss(config, idGloss)
+  if (output) {
+    process.stdout.write(yaml.stringify({ type: 'id-gloss', output }) + '...\n')
+    await fs.ensureDir(config.storage.path('id-gloss'))
+    await fs.writeFile(config.storage.path('id-gloss', `${output.idGloss}.yaml`), yaml.stringify(output))
+  } else {
+    console.error('id-gloss not available:', idGloss)
+  }
+  return output
+}
 
 async function run () {
   // scrape list of available known tags
   if (argv['tags-list']) {
-    const output = await scrapeTagsList(argv)
-    process.stdout.write(yaml.stringify({ type: 'tags-list', output }) + '...\n')
-    await fs.ensureDir(path.join(argv.storage, 'id-gloss'))
-    await fs.writeFile(path.join(argv.storage, 'tags-list.yaml'), yaml.stringify(output))
+    await fetchTagsList(argv)
   }
 
   // scrape specific tag as requested
   for (const tagName of (argv.tag || [])) {
-    const output = await scrapeTag(argv, tagName)
-    if (output) {
-      process.stdout.write(yaml.stringify({ type: 'tag', output }) + '...\n')
-      await fs.ensureDir(path.join(argv.storage, 'tag'))
-      await fs.writeFile(path.join(argv.storage, 'tag', sanitize(`${output.tag}.yaml`, { replacement: encodeURIComponent })), yaml.stringify(output))
-    } else {
-      console.error('tag results not available:', tagName)
-    }
+    await fetchTagGraph(argv, tagName)
   }
 
   // scrape any individual id-glosses specified
   for (const idGloss of (argv['id-gloss'] || [])) {
-    const output = await scrapeIDGloss(argv, idGloss)
-    if (output) {
-      process.stdout.write(yaml.stringify({ type: 'id-gloss', output }) + '...\n')
-      await fs.ensureDir(path.join(argv.storage, 'id-gloss'))
-      await fs.writeFile(path.join(argv.storage, 'id-gloss', sanitize(`${output.idGloss}.yaml`, { replacement: encodeURIComponent })), yaml.stringify(output))
-    } else {
-      console.error('id-gloss not available:', idGloss)
+    await fetchIDGloss(argv, idGloss)
     }
   }
 }
