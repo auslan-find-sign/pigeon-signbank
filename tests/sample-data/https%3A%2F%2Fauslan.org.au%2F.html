@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+
+
+<html>
+  <head>
+      <title>Signbank</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.df2756479369.css"  media="screen">
+      <link rel="stylesheet" type="text/css" href="/static/css/style.c33f44540440.css">
+      <link rel="stylesheet" type="text/css" href="/static/css/auslan.4e8d791d57b5.css">
+      <link rel="shortcut icon" type="image/png" href="/static/images/favicon.873e9f27cf6a.png"/>
+    
+  </head>
+  <body>
+
+    <div id='wrap'>
+        <div class="container">
+            <div id="leftcontentborder"></div>
+            <div id="rightcontentborder"></div>
+            <!-- <ul class='nav navbar-nav navbar-right'> -->
+            <ul id="login">
+			    
+			       <li><a href="/accounts/login/?next=/">Login</a></li>
+			    
+		    </ul>
+            <div id='header'><h1>Signbank</h1>
+                <div id='logoholder' class='visible-lg visible-md visible-sm'></div>
+            </div>
+
+            <div id='bslstripe'></div>
+
+
+
+        <nav id='navbar' class="navbar navbar-default" role="navigation">
+
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+  </div>
+
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+    
+    
+        
+        <li><a href="/">Home</a></li>
+      
+    
+        
+        <li class='dropdown'>
+             <a href="/about/"  class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+             <ul class="dropdown-menu">
+             
+                <li ><a href="/about/classes/">Classes</a></li>
+             
+                <li ><a href="/about/community/">Community</a></li>
+             
+                <li ><a href="/about/history/">History</a></li>
+             
+                <li ><a href="/about/links/">Links</a></li>
+             
+                <li ><a href="/about/acknowledgements/">Acknowledgements</a></li>
+             
+             </ul>
+        </li>
+      
+    
+        
+        <li class='dropdown'>
+             <a href="/research/"  class="dropdown-toggle" data-toggle="dropdown">Research <b class="caret"></b></a>
+             <ul class="dropdown-menu">
+             
+                <li ><a href="/research/about/">About Research</a></li>
+             
+                <li ><a href="/about/grammar/">Grammar</a></li>
+             
+                <li ><a href="/about/corpus/">Corpus</a></li>
+             
+             </ul>
+        </li>
+      
+    
+        
+        <li><a href="/about/dictionary/">Dictionary</a></li>
+      
+    
+    </ul>
+
+    <ul class='nav navbar-nav'>
+        <li class='dropdown'>
+            <a href="#" class='dropdown-toggle' data-toggle='dropdown'>Signbank <b class="caret"></b></a>
+            <ul class='dropdown-menu'>
+                <li><a href="/dictionary/">Dictionary</a></li>
+                
+                <li><a href="/numbersigns.html">Number Signs</a></li>
+                
+                
+                
+                
+                
+                <li><a href="/spell/twohanded.html">Finger Spelling</a></li>
+                
+                <li id="extrafeedback"><a href="/feedback/generalfeedback/">Help build Signbank</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    
+    <ul class='nav navbar-nav'>
+        <li class='dropdown'>
+            <a href="#" class='dropdown-toggle' data-toggle='dropdown'>Share <b class="caret"></b></a>
+            <ul class='dropdown-menu'>
+                
+                <li><a href="http://twitter.com/share?text=%20%23auslansignbank&url=http%3A//auslan.org.au/"><img src="/static/images/social/twitter.png" alt="Twitter"> Share on Twitter</a></li>
+                
+                
+                <li><a href="http://facebook.com/sharer.php?u=http%3A//auslan.org.au/"><img src="/static/images/social/facebook.png" alt="facebook"> Share on Facebook</a></li>
+                
+                
+                
+            </ul>
+        </li>
+    </ul>
+    
+
+    
+    <ul class='nav navbar-nav navbar-right'>
+        <li><a href="/dictionary/search/"><strong>Dialect Preference:</strong>
+            <span id='nav_dialect'>Australia Wide</span></a></li>
+        <li>
+            <form class="navbar-form" role="search" id="frmSearch" name="frmSearch" method="get" action="/dictionary/search">
+                <div class="input-group" style='width:300px'>
+                    <input type="text" name="query" class="form-control" placeholder="keyword" maxlength="100" id="id_menu_query">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                    <select name="category" class="form-control" id="id_menu_category">
+  <option value="all">All</option>
+
+  <option value="semantic:health">Health</option>
+
+  <option value="semantic:education">Education</option>
+
+  <option value="semantic:animal">Animal</option>
+
+  <option value="semantic:arithmetic">Arithmetic</option>
+
+  <option value="semantic:arts">Arts</option>
+
+  <option value="semantic:bodypart">Body Part</option>
+
+  <option value="semantic:car">Car</option>
+
+  <option value="semantic:city">City</option>
+
+  <option value="semantic:clothing">Clothing</option>
+
+  <option value="semantic:color">Color</option>
+
+  <option value="semantic:cooking">Cooking</option>
+
+  <option value="semantic:day">Day</option>
+
+  <option value="semantic:deaf">Deaf</option>
+
+  <option value="semantic:drink">Drink</option>
+
+  <option value="semantic:family">Family</option>
+
+  <option value="semantic:feel">Feel</option>
+
+  <option value="semantic:food">Food</option>
+
+  <option value="semantic:furniture">Furniture</option>
+
+  <option value="semantic:government">Government</option>
+
+  <option value="semantic:groom">Groom</option>
+
+  <option value="semantic:judge">Judge</option>
+
+  <option value="semantic:language act">Language act</option>
+
+  <option value="semantic:law">Law</option>
+
+  <option value="semantic:material">Material</option>
+
+  <option value="semantic:metalg">Metalg</option>
+
+  <option value="semantic:mind">Mind</option>
+
+  <option value="semantic:money">Money</option>
+
+  <option value="semantic:nature">Nature</option>
+
+  <option value="semantic:number">Number</option>
+
+  <option value="semantic:order">Order</option>
+
+  <option value="semantic:people">People</option>
+
+  <option value="semantic:physical act">Physical act</option>
+
+  <option value="semantic:quality">Quality</option>
+
+  <option value="semantic:quantity">Quantity</option>
+
+  <option value="semantic:question">Question</option>
+
+  <option value="semantic:recreation">Recreation</option>
+
+  <option value="semantic:rooms">Rooms</option>
+
+  <option value="semantic:salutation">Salutation</option>
+
+  <option value="semantic:sensing">Sensing</option>
+
+  <option value="semantic:sexuality">Sexuality</option>
+
+  <option value="semantic:shapes">Shapes</option>
+
+  <option value="semantic:shopping">Shopping</option>
+
+  <option value="semantic:sport">Sport</option>
+
+  <option value="semantic:telecommunications">Telecommunications</option>
+
+  <option value="semantic:time">Time</option>
+
+  <option value="semantic:travel">Travel</option>
+
+  <option value="semantic:utensil">Utensil</option>
+
+  <option value="semantic:weather">Weather</option>
+
+  <option value="semantic:work">Work</option>
+
+</select>
+                </div>
+            </form>
+        </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+
+        
+
+
+
+        <div role='main'>
+        
+
+
+
+
+
+
+
+
+   <h1><span style="font-size: 36px; font-family: Helvetica; color: rgb(57, 132, 198);">Welcome to Auslan Signbank</span></h1>
+
+                    <p class="asbBodyText" style="margin-top: 5px; margin-bottom: 10px;"><span style="font-family: Helvetica;">
+                      Auslan Signbank is a language resources site for Auslan (Australian Sign Language). 
+                      Auslan is the language of the deaf community in Australia. Here you will find:</span></p><ul><li><span style="font-family: Helvetica;">a dictionary</span></li><li><span style="font-family: Helvetica;">ability to search for signs related to medical and health topics</span></li><li><span style="font-family: Helvetica;">ability to search for signs related to educational and teaching topics</span></li><li><span style="font-family: Helvetica;">videos of deaf people using the listed Auslan signs</span></li><li><span style="font-family: Helvetica;">information on the deaf community in Australia</span></li><li><span style="font-family: Helvetica;">links to Auslan classes</span></li></ul><p class="asbBodyText" style="margin-top: 5px; margin-bottom: 10px;"><span style="font-family: Helvetica;">Users of Auslan—deaf people, deaf students, sign language interpreters, students of 
+                      Auslan, or a parents of deaf children—are invited to provide feedback to help improve the dictionary, using the links provided. Auslan is growing and changing all the time.</span></p>
+
+<p class="asbBodyText" style="margin-top: 5px; margin-bottom: 10px;"><span style="font-family: 'Helvetica Neue'; font-size: 10.5pt;">We apologise for the poor quality of some of the video clips and the
+slow download speeds currently found in Auslan Signbank.&nbsp;</span></p><p class="asbBodyText" style="margin-top: 5px; margin-bottom: 10px;">
+
+</p><p class="p1"><font face="Helvetica">However, with the financial support of the <b>AMP Tomorrow Fund</b>, the <b>Ian Potter Foundation</b>, the <b>Australian Research Council</b> we have been able to replace many of the poor quality videos with higher resolution ones. They can now also be viewed at normal speed or in slow motion. In addition, many new videos have also been added to Signbank by <b><a href="http://www.deafconnected.com.au/">deafConnectEd</a></b> (Melbourne Polytechnic) with funding from the Victorian Government Department of Education and Training. They have also added new entries with definitions in&nbsp;Auslan of specialised&nbsp;English&nbsp;educational terminology, and in some cases they have also added suggestions for how these terms could be represented using&nbsp;a short signed description.</font></p><p class="p1"><span style="font-family: Helvetica;">We also hope to include on this site&nbsp;</span><span style="font-family: Helvetica;">video clips of all of the examples used in the text-book on Auslan, e.g., how to make questions, statements, orders and requests, etc., (</span>Johnston, T., &amp; Schembri, A. 2007.&nbsp;<i>Australian Sign Language (Auslan): An introduction to sign language linguistics</i>. Cambridge: Cambridge University Press).<font face="Helvetica"><br></font></p>
+
+
+<p class="asbBodyText" style="margin-top: 5px; margin-bottom: 10px;"><br></p><p class="asbBodyText" style="margin-top: 5px; margin-bottom: 10px;"><span style="font-family: 'Helvetica Neue'; font-size: 10.5pt;"><img src="http://media.auslan.org.au/django-summernote/2015-06-16/5b7c1f74-2412-4852-ab45-67ae4f18d6a4.jpg" style="width: 153px; height: 98.7942857142857px;">&nbsp;<img src="http://media.auslan.org.au/django-summernote/2015-06-16/0b408997-615b-4d91-80d4-b79cacbca4c8.jpg" style="width: 111px; height: 111px;"></span><img src="http://media.auslan.org.au/django-summernote/2015-06-16/45f3e456-9493-4fbf-9cfc-7c82e7ab5027.jpg" style="font-family: 'Helvetica Neue'; font-size: 10.5pt; width: 411.268817204301px; height: 112px;"><img src="http://media.auslan.org.au/django-summernote/2018-09-03/c1253ef5-321c-468b-b877-49cd870e9b43.jpg" style="width: 110px;"><span style="height: 50px; background-color: rgb(99, 99, 99);"></span></p>
+
+
+<p class="asbBodyText" style="margin-top: 5px; margin-bottom: 10px;"><br></p>
+
+
+
+
+
+
+
+        </div>
+
+        </div>
+    </div>
+
+    <div id="footer">
+       <div class='container'>
+          <div id="copyright">
+            <div id="notice">
+            	<!--
+              	<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+              	<img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />
+              	-->
+              <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Dataset" property="dct:title" rel="dct:type">This Signbank</span> is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons BY-NC-ND 4.0</a>.
+            </div>
+          </div>
+          <div id="feedback">
+          	<a href="/feedback/generalfeedback/">Feedback</a>
+          </div>
+       </div>
+    </div>
+
+    <script src="/static/js/jquery-1.11.0.min.8fc25e27d427.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.ba847811448e.js"></script>
+
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf-8" src="/static/js/jquery.dataTables.min.f1e6c13d3982.js"></script>
+
+    <script src="/static/js/signbank.351f40c88af9.js"></script>
+
+    
+    
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-3928964-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
+  </body>
+</html>

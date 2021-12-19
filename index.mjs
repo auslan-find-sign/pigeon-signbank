@@ -3,6 +3,8 @@ import { hideBin } from 'yargs/helpers'
 import scrapeIDGloss from './library/scrape-idgloss.mjs'
 import scrapeTagsList from './library/scrape-tags-list.mjs'
 import scrapeTag from './library/scrape-tag-page.mjs'
+import scrapeSiteInfo from './library/scrape-site-info.mjs'
+import regionImagesMap from './library/region-images-map.mjs'
 import fs from 'fs-extra'
 import path from 'path'
 import yaml from 'yaml'
@@ -39,6 +41,11 @@ const { argv } = yargs(hideBin(process.argv))
     alias: 'a',
     type: 'boolean',
     description: 'Autopilot spiders any known information that is missing, and rechecks anything older than expiry'
+  })
+  .option('build-search-data', {
+    alias: 'b',
+    type: 'string',
+    description: 'Build search data, write to specified path in find-sign search-data yaml format, takes a build config yaml file as input'
   })
   .option('storage', {
     alias: 's',
@@ -97,6 +104,61 @@ async function fetchIDGloss (config, idGloss) {
     console.error('# id-gloss not available:', idGloss)
   }
   return output
+}
+
+async function fetchSiteInfo (config) {
+  const output = await scrapeSiteInfo(config)
+  if (output) {
+    process.stdout.write(yaml.stringify({ type: 'site-info', output }) + '...\n')
+    await fs.ensureDir(config.storage.path())
+    await fs.writeFile(config.storage.path('site-info.yaml'), yaml.stringify(output))
+  } else {
+    console.error('# homepage not available')
+  }
+  return output
+}
+
+/**
+ * Build's search-data.yaml file inside signbank-data directory, suitable for sign-search import
+ * @param {object} config
+ */
+async function buildSearchData (config) {
+  const read = async (...p) => yaml.parse((await fs.readFile(config.storage.path(...p))).toString('utf-8'))
+  const siteInfo = await read('site-info.yaml')
+  const idGlossList = await read('id-gloss-list.yaml')
+  const tagGraph = await read('tag-graph.yaml')
+
+  const searchData = {}
+  for (const idGloss of idGlossList) {
+    const doc = await read('id-gloss', `${idGloss}.yaml`)
+
+    searchData[idGloss] = {
+      id: idGloss,
+      title: doc.keywords.join(', '),
+      words: doc.keywords,
+      link: doc.pageURL,
+      nav: [
+        [siteInfo.title, config.url],
+        ['Dictionary', (new URL('/dictionary/', config.url))],
+        [`#${doc.signNumber} ${doc.idGloss}`, doc.pageURL]
+      ],
+      tags: [
+        siteInfo.title.toLowerCase().replace(/[^a-z0-9]+/gmi, '-'),
+        ...doc.regionImages.flatMap(imgUrl => regionImagesMap[imgUrl] || []),
+        ...tagGraph[idGloss]
+      ],
+      body: doc.writtenDefinitions.flatMap(def =>
+        `${def.title}:\n` + def.entries.map((x, i) => ` ${i + 1}. ${x}`).join('\n')
+      ).slice(0, 6).join('\n'),
+      media: [
+        ...doc.signDemonstrations,
+        ...doc.signedDefinitions
+      ].map(url => ({ method: 'fetch', url })),
+      timestamp: doc.timestamp
+    }
+  }
+
+  await fs.writeFile(config['build-search-data'], yaml.stringify(searchData))
 }
 
 async function run () {
@@ -202,6 +264,10 @@ async function run () {
     await fs.writeFile(argv.storage.path('tag-graph.yaml'), yaml.stringify(tagGraph))
 
     console.log('# All done! Should have everything now!')
+  }
+
+  if (argv['build-search-data']) {
+    await buildSearchData(argv)
   }
 }
 
