@@ -18,6 +18,7 @@
     "pigeonmark-utils": "^1.0.4",
     "sanitize-filename": "^1.6.3",
     "uri-tag": "^1.4.1",
+    "xlsx-write-stream": "^1.0.0",
     "yaml": "^1.10.2",
     "yargs": "^17.3.0"
   },

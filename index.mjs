@@ -5,11 +5,14 @@ import scrapeTagsList from './library/scrape-tags-list.mjs'
 import scrapeTag from './library/scrape-tag-page.mjs'
 import scrapeSiteInfo from './library/scrape-site-info.mjs'
 import regionImagesMap from './library/region-images-map.mjs'
+import XLSXWriteStream from 'xlsx-write-stream'
 import fs from 'fs-extra'
 import path from 'path'
 import yaml from 'yaml'
 import sanitize from 'sanitize-filename'
 import parseDuration from 'parse-duration'
+import './library/array-at-polyfill.mjs'
+import { pipeline } from 'stream/promises'
 
 const { argv } = yargs(hideBin(process.argv))
   .option('url', {
@@ -46,6 +49,10 @@ const { argv } = yargs(hideBin(process.argv))
     alias: 'b',
     type: 'string',
     description: 'Build search data, write to specified path in find-sign search-data yaml format, takes a build config yaml file as input'
+  })
+  .option('export-spreadsheet', {
+    type: 'string',
+    description: 'Export an Excel .xlsx file to the specified path'
   })
   .option('storage', {
     alias: 's',
@@ -161,6 +168,52 @@ async function buildSearchData (config) {
   await fs.writeFile(config['build-search-data'], yaml.stringify(searchData))
 }
 
+/**
+ * Reads IDGlosses from storage, outputs data that can be transformed in to an XLSX spreadsheet using xlsx-write-stream
+ * @param {*} config
+ */
+async function * toXLSXData (config) {
+  const read = async (...p) => yaml.parse((await fs.readFile(config.storage.path(...p))).toString('utf-8'))
+  const idGlossList = await read('id-gloss-list.yaml')
+  const tagGraph = await read('tag-graph.yaml')
+
+  yield [
+    'id gloss',
+    'sign number',
+    'keywords',
+    'link',
+    'region',
+    'previous sign',
+    'next sign',
+    'tags',
+    'updated date',
+    'definitions text'
+  ]
+
+  for (const idGloss of idGlossList) {
+    const doc = await read('id-gloss', `${idGloss}.yaml`)
+
+    yield [
+      doc.idGloss,
+      doc.signNumber,
+      doc.keywords.join(', '),
+      doc.pageURL,
+      doc.regionImages.filter(url =>
+        url.includes('/static/img/maps/Auslan/')
+      ).map(url =>
+        url.split('/').at(-1).split('.')[0].replace('-traditional', '')
+      ).join(', '),
+      doc.previousSign,
+      doc.nextSign,
+      tagGraph[doc.idGloss].join(', '),
+      new Date(doc.timestamp),
+      doc.writtenDefinitions.flatMap(def =>
+        `${def.title}:\n` + def.entries.map((x, i) => ` ${i + 1}. ${x}`).join('\n')
+      ).join('\n\n')
+    ]
+  }
+}
+
 async function run () {
   // scrape list of available known tags
   if (argv['tags-list']) {
@@ -268,6 +321,15 @@ async function run () {
 
   if (argv['build-search-data']) {
     await buildSearchData(argv)
+  }
+
+  if (argv['export-spreadsheet']) {
+    console.log('# Exporting spreadsheet...')
+    await pipeline([
+      toXLSXData(argv),
+      new XLSXWriteStream(),
+      fs.createWriteStream(argv['export-spreadsheet'])
+    ])
   }
 }
 
