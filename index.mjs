@@ -20,7 +20,6 @@ const { argv } = yargs(hideBin(process.argv))
     description: 'spider the list of available tags, ignores expiry'
   })
   .option('tag', {
-    alias: 't',
     type: 'array',
     description: 'specific tag or list of tags to spider, ignores expiry'
   })
@@ -95,7 +94,7 @@ async function fetchIDGloss (config, idGloss) {
     await fs.ensureDir(config.storage.path('id-gloss'))
     await fs.writeFile(config.storage.path('id-gloss', `${output.idGloss}.yaml`), yaml.stringify(output))
   } else {
-    console.error('id-gloss not available:', idGloss)
+    console.error('# id-gloss not available:', idGloss)
   }
   return output
 }
@@ -117,6 +116,12 @@ async function run () {
   }
 
   if (argv.autopilot) {
+    // get site info
+    if (await shouldRefetch(argv, 'site-info.yaml')) {
+      console.log('# Loading site info')
+      await fetchSiteInfo(argv)
+    }
+
     // get tags list
     if (await shouldRefetch(argv, 'tags-list.yaml')) {
       console.log('# Loading list of tags')
@@ -137,6 +142,7 @@ async function run () {
     // discover all known, published, public id-glosses... this could take a moment...
     console.log('# Analysing data for every known IDGloss. This could take a moment...')
     const idGlossSet = new Set()
+    const tagGraph = {}
     // first scan through all of the tag listings
     for (const tag of tags) {
       let fileData
@@ -147,7 +153,11 @@ async function run () {
         else throw err
       }
       const doc = yaml.parse(fileData.toString('utf-8'))
-      for (const gloss of doc.publicGlosses) idGlossSet.add(gloss)
+      for (const gloss of doc.publicGlosses) {
+        idGlossSet.add(gloss)
+        if (!tagGraph[gloss]) tagGraph[gloss] = []
+        if (!tagGraph[gloss].includes(doc.tag)) tagGraph[gloss].push(doc.tag)
+      }
     }
 
     // read through every
@@ -179,6 +189,17 @@ async function run () {
         }
       }
     }
+
+    // save out a list of IDGlosses that are still present, so we know which files are still included in the dataset
+    await fs.writeFile(argv.storage.path('id-gloss-list.yaml'), yaml.stringify([...idGlossSet]))
+
+    // ensure tag graph has entries for every current id-gloss, even if they're empty
+    for (const idGloss of idGlossSet) {
+      if (!tagGraph[idGloss]) tagGraph[idGloss] = []
+    }
+
+    // save tag graph
+    await fs.writeFile(argv.storage.path('tag-graph.yaml'), yaml.stringify(tagGraph))
 
     console.log('# All done! Should have everything now!')
   }
