@@ -22,11 +22,6 @@ function filenameFromURL (url, extension = '.html') {
   return decodeURIComponent(file)
 }
 
-// take in a string, return an array of cleaned up words
-function extractWords (text) {
-  return `${text}`.split(/[^a-zA-Z0-9'’-]+/).map(x => x.trim()).filter(x => x.match(/^[a-zA-Z0-9'’-]+$/))
-}
-
 /**
  * Scrape IDGloss public page, returns everything useful extracted from the html
  * @param {object} config
@@ -44,7 +39,7 @@ export default async function scrapeIDGloss (config, idgloss) {
 
   // get string list of keywords
   const keywordsString = get.text(selectOne(defblock, '#keywords')).replace(/[\n\t ]+/g, ' ').trim().split(': ')[1]
-  const keywords = extractWords(keywordsString)
+  const keywords = keywordsString.split(',').map(x => x.trim())
 
   // note down any region images
   const regionImages = selectAll(defblock, '#states img').map(image => relativeLink(pageURL, get.attribute(image, 'src')))
