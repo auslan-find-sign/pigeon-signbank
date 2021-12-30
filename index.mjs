@@ -125,6 +125,11 @@ async function fetchSiteInfo (config) {
   return output
 }
 
+// take in a string, return an array of cleaned up words
+function extractWords (text) {
+  return `${text}`.split(/[^a-zA-Z0-9'’-]+/).map(x => x.trim()).filter(x => x.match(/^[a-zA-Z0-9'’-]+$/))
+}
+
 /**
  * Build's search-data.yaml file inside signbank-data directory, suitable for sign-search import
  * @param {object} config
@@ -142,7 +147,7 @@ async function buildSearchData (config) {
     searchData[idGloss] = {
       id: idGloss,
       title: doc.keywords.join(', '),
-      words: doc.keywords,
+      words: extractWords(doc.keywords.join(' ')),
       link: doc.pageURL,
       nav: [
         [siteInfo.title, config.url],
