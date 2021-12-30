@@ -152,6 +152,7 @@ async function buildSearchData (config) {
       tags: [
         siteInfo.title.toLowerCase().replace(/[^a-z0-9]+/gmi, '-'),
         ...doc.regionImages.flatMap(imgUrl => regionImagesMap[imgUrl] || []),
+        ...(doc.signedDefinitions.length > 0) ? ['described'] : [],
         ...tagGraph[idGloss]
       ],
       body: doc.writtenDefinitions.flatMap(def =>
