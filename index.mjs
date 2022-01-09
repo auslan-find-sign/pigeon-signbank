@@ -159,7 +159,7 @@ async function buildSearchData (config) {
         ...doc.regionImages.flatMap(imgUrl => regionImagesMap[imgUrl] || []),
         ...(doc.signedDefinitions.length > 0) ? ['described'] : [],
         ...tagGraph[idGloss]
-      ],
+      ].map(x => x.replace(/:/gmi, '.').replace(/[^a-zA-Z0-9.]+/gmi, '-')),
       body: doc.writtenDefinitions.flatMap(def =>
         `${def.title}:\n` + def.entries.map((x, i) => ` ${i + 1}. ${x}`).join('\n')
       ).slice(0, 6).join('\n'),
