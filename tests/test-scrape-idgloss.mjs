@@ -22,7 +22,10 @@ describe('library/scrape-idgloss', () => {
     await nockup('https://auslan.org.au/dictionary/gloss/anything1a.html')
     // mockup the video head request too
     nock('https://media.auslan.org.au/').head('/mp4video/28/28000_1.mp4').reply(200, '', {
-      'Last-Modified': 'Tue, 08 Dec 2020 06:23:52 GMT'
+      'Last-Modified': 'Tue, 08 Dec 2020 06:23:52 GMT',
+      'ETag': '"5fcf1bf8-b5622"',
+      'Content-Length': '742946',
+      'Content-Type': 'video/mp4'
     })
 
     expect(await scrapeIDGloss(config, 'anything1a')).to.deep.equal({
@@ -34,7 +37,16 @@ describe('library/scrape-idgloss', () => {
         'https://auslan.org.au/static/img/maps/Auslan.1b91048fff02.png',
         'https://auslan.org.au/static/img/maps/Auslan/AustraliaWide-traditional.1c3fd2ba0f52.png'
       ],
-      signDemonstrations: ['https://media.auslan.org.au/mp4video/28/28000_1.mp4'],
+      signDemonstrations: [
+        {
+          url: 'https://media.auslan.org.au/mp4video/28/28000_1.mp4',
+          available: true,
+          lastModified: 'Tue, 08 Dec 2020 06:23:52 GMT',
+          etag: '"5fcf1bf8-b5622"',
+          contentType: 'video/mp4',
+          contentLength: 742946
+        }
+      ],
       signedDefinitions: [],
       writtenDefinitions: [
         {

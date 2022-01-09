@@ -166,7 +166,7 @@ async function buildSearchData (config) {
       media: [
         ...doc.signDemonstrations,
         ...doc.signedDefinitions
-      ].map(url => ({ method: 'fetch', url })),
+      ].map(media => ({ method: 'fetch', ...(typeof media === 'string' ? { url: media } : media) })),
       timestamp: doc.timestamp
     }
   }

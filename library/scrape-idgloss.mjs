@@ -47,14 +47,26 @@ export default async function scrapeIDGloss (config, idgloss) {
   // extract video urls
   const videoURLs = selectAll(defblock, 'video source').map(source => relativeLink(pageURL, get.attribute(source, 'src')))
 
+  const videoInfos = await Promise.all(videoURLs.map(async url => {
+    const response = await fetch(url, { method: 'HEAD' })
+    return {
+      url,
+      available: response.ok,
+      lastModified: response.headers.get('Last-Modified'),
+      etag: response.headers.get('ETag'),
+      contentType: response.headers.get('Content-Type'),
+      contentLength: parseInt(response.headers.get('Content-Length'))
+    }
+  }))
+
   const output = {
     signNumber: parseInt(get.text(selectOne(signinfo, 'button.btn.navbar-btn:contains("Sign"):contains("of")')).trim().slice(5)),
     idGloss: decodeURIComponent(filenameFromURL(pageURL, '.html')),
     pageURL: pageURL,
     keywords,
     regionImages,
-    signDemonstrations: videoURLs.filter(obj => !obj.match(/Definition/)),
-    signedDefinitions: videoURLs.filter(obj => obj.match(/Definition/)),
+    signDemonstrations: videoInfos.filter(({ url }) => !url.match(/Definition/)),
+    signedDefinitions: videoInfos.filter(({ url }) => url.match(/Definition/)),
     writtenDefinitions: selectAll(defblock, 'div.definition-panel').map(panel => {
       const title = get.text(selectOne(panel, 'h3.panel-title')).trim()
 
@@ -67,11 +79,8 @@ export default async function scrapeIDGloss (config, idgloss) {
   }
 
   // discover timestamp from Last Modified header on video
-  if (output.signDemonstrations.length > 0) {
-    const videoResponse = await fetch(output.signDemonstrations[0], { method: 'HEAD' })
-    if (videoResponse.ok && videoResponse.headers.has('last-modified')) {
-      output.timestamp = Date.parse(videoResponse.headers.get('last-modified'))
-    }
+  if (videoInfos.length > 0) {
+    output.timestamp = Math.max(videoInfos.map(x => Date.parse(x.lastModified)))
   }
 
   return output
