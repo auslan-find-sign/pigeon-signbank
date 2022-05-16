@@ -48,7 +48,7 @@ const { argv } = yargs(hideBin(process.argv))
   .option('build-search-data', {
     alias: 'b',
     type: 'string',
-    description: 'Build search data, write to specified path in find-sign search-data yaml format, takes a build config yaml file as input'
+    description: 'Build search data, write to specified path in find-sign search-data json format, takes a build config yaml file as input'
   })
   .option('export-spreadsheet', {
     type: 'string',
@@ -145,7 +145,6 @@ async function buildSearchData (config) {
     const doc = await read('id-gloss', `${idGloss}.yaml`)
 
     searchData[idGloss] = {
-      id: idGloss,
       title: doc.keywords.join(', '),
       words: extractWords(doc.keywords.join(' ')),
       link: doc.pageURL,
@@ -169,11 +168,17 @@ async function buildSearchData (config) {
       ].map(media => ({
         method: 'fetch', ...(typeof media === 'string' ? { url: media } : { url: media.url, version: media.etag })
       })),
+      provider: {
+        id: siteInfo.title.toLowerCase().replace(/[^a-z0-9]+/gmi, '-'),
+        name: siteInfo.title,
+        verb: 'documented',
+        link: config.url
+      },
       timestamp: doc.timestamp
     }
   }
 
-  await fs.writeFile(config['build-search-data'], yaml.stringify(searchData))
+  await fs.writeFile(config['build-search-data'], JSON.stringify(searchData))
 }
 
 /**
