@@ -27,5 +27,20 @@ export default {
   'https://auslan.org.au/static/img/maps/Auslan/Queensland-traditional.0f2aec98ea5e.png': ['qld'],
   'https://auslan.org.au/static/img/maps/Auslan/NewSouthWales-traditional.18c5764b0bfc.png': ['nsw', 'act'],
   'https://auslan.org.au/static/img/maps/Auslan/Victoria-traditional.28516800afd7.png': ['vic'],
-  'https://auslan.org.au/static/img/maps/Auslan/Tasmania-traditional.db05ad26a9d5.png': ['tas']
+  'https://auslan.org.au/static/img/maps/Auslan/Tasmania-traditional.db05ad26a9d5.png': ['tas'],
+
+  // 2022 moved images to media subdomain
+  'https://media.auslan.org.au/img/maps/Auslan.png': [],
+  'https://media.auslan.org.au/img/maps/Auslan/AustraliaWide-traditional.png': ['everywhere', 'wa', 'nt', 'sa', 'qld', 'nsw', 'act', 'vic', 'tas'],
+  'https://media.auslan.org.au/img/maps/Auslan/AustraliaWide.png': ['everywhere', 'wa', 'nt', 'sa', 'qld', 'nsw', 'act', 'vic', 'tas'],
+  'https://media.auslan.org.au/img/maps/Auslan/NorthernDialect-traditional.png': ['qld', 'nsw', 'act'],
+  'https://media.auslan.org.au/img/maps/Auslan/SouthernDialect-traditional.png': ['wa', 'nt', 'sa', 'vic', 'tas'],
+  'https://media.auslan.org.au/img/maps/Auslan/WesternAustralia-traditional.png': ['wa'],
+  'https://media.auslan.org.au/img/maps/Auslan/NorthernTerritory-traditional.png': ['nt'],
+  'https://media.auslan.org.au/img/maps/Auslan/SouthAustralia-traditional.png': ['sa'],
+  'https://media.auslan.org.au/img/maps/Auslan/SouthAustralia.png': ['sa'],
+  'https://media.auslan.org.au/img/maps/Auslan/Queensland-traditional.png': ['qld'],
+  'https://media.auslan.org.au/img/maps/Auslan/NewSouthWales-traditional.png': ['nsw', 'act'],
+  'https://media.auslan.org.au/img/maps/Auslan/Victoria-traditional.png': ['vic'],
+  'https://media.auslan.org.au/img/maps/Auslan/Tasmania-traditional.png': ['tas'],
 }
