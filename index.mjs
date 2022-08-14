@@ -361,12 +361,12 @@ async function run () {
       allDone = true // optimistic...
       for (const idGloss of idGlossSet) {
         if (await shouldRefetch(argv, 'id-gloss', `${idGloss}.yaml`)) {
-          allDone = false // dirty, need to recheck at the end to see if we're finished
           console.log(`# Fetching IDGloss "${idGloss}"`)
           const doc = await fetchIDGloss(argv, idGloss)
           if (doc) {
             if (doc.nextGloss) idGlossSet.add(doc.nextGloss)
             if (doc.previousGloss) idGlossSet.add(doc.previousGloss)
+            allDone = false // dirty, need to recheck at the end to see if we're finished
           }
         }
       }
