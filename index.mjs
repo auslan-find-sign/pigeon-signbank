@@ -13,6 +13,7 @@ import sanitize from 'sanitize-filename'
 import parseDuration from 'parse-duration'
 import './library/array-at-polyfill.mjs'
 import { pipeline } from 'stream/promises'
+import { read } from 'fs'
 
 const { argv } = yargs(hideBin(process.argv))
   .option('url', {
@@ -73,6 +74,10 @@ const { argv } = yargs(hideBin(process.argv))
       }
     },
     description: 'filesystem location to store signbank spider output'
+  })
+  .option('cleanup', {
+    type: 'boolean',
+    description: 'Remove any unreferenced files in the storage path'
   })
 
 async function shouldRefetch (config, ...path) {
@@ -252,6 +257,29 @@ async function * toXLSXData (config) {
   }
 }
 
+async function cleanup (config) {
+  const read = async (...p) => yaml.parse((await fs.readFile(config.storage.path(...p))).toString('utf-8'))
+  const idGlossList = (await read('id-gloss-list.yaml')).map(x => path.resolve(config.storage.path('id-gloss', `${x}.yaml`)))
+  const tagsList = (await read('tags-list.yaml')).map(x => path.resolve(config.storage.path('tag', `${x}.yaml`)))
+
+  let count = 0
+  for (const file of await fs.readdir(config.storage.path('id-gloss'))) {
+    const filePath = path.resolve(config.storage.path('id-gloss'), file)
+    if (!idGlossList.includes(filePath)) {
+      console.log(`# Removing id-gloss/${file}`)
+      await fs.remove(filePath)
+    }
+  }
+
+  for (const file of await fs.readdir(config.storage.path('tag'))) {
+    const filePath = path.resolve(config.storage.path('tag'), file)
+    if (!tagsList.includes(filePath)) {
+      console.log(`# Removing tag/${file}`)
+      await fs.remove(filePath)
+    }
+  }
+}
+
 async function run () {
   // scrape list of available known tags
   if (argv['tags-list']) {
@@ -373,6 +401,10 @@ async function run () {
       new XLSXWriteStream(),
       fs.createWriteStream(argv['export-spreadsheet'])
     ])
+  }
+
+  if (argv['cleanup']) {
+    await cleanup(argv)
   }
 }
 
