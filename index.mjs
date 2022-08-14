@@ -106,7 +106,7 @@ async function fetchTagGraph (config, tag) {
     await fs.ensureDir(config.storage.path('tag'))
     await fs.writeFile(config.storage.path('tag', `${output.tag}.yaml`), yaml.stringify(output))
   } else {
-    console.error('# tag results not available:', tag)
+    console.log('# tag results not available:', tag)
   }
   return output
 }
@@ -118,7 +118,7 @@ async function fetchIDGloss (config, idGloss) {
     await fs.ensureDir(config.storage.path('id-gloss'))
     await fs.writeFile(config.storage.path('id-gloss', `${output.idGloss}.yaml`), yaml.stringify(output))
   } else {
-    console.error('# id-gloss not available:', idGloss)
+    console.log('# id-gloss not available:', idGloss)
   }
   return output
 }
@@ -130,7 +130,7 @@ async function fetchSiteInfo (config) {
     await fs.ensureDir(config.storage.path())
     await fs.writeFile(config.storage.path('site-info.yaml'), yaml.stringify(output))
   } else {
-    console.error('# homepage not available')
+    console.log('# homepage not available')
   }
   return output
 }
