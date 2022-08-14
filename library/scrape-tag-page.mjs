@@ -2,6 +2,7 @@ import fetch from './fetch.mjs'
 import { get } from 'pigeonmark-utils'
 import { selectAll, selectOne } from 'pigeonmark-select'
 import HTML from 'pigeonmark-html'
+import unslice from './unslice.mjs'
 import * as urlRoutes from './url-routes.mjs'
 import './array-at-polyfill.mjs'
 
@@ -40,10 +41,10 @@ export async function scrapeTagPage (config, tag, pageNum) {
     pageNum: parseInt(get.text(selectOne(doc, '#searchresults > p > strong') || '1')),
     totalPages: Math.max(1, ...selectAll(doc, '#searchresults > p > *').map(x => parseInt(get.text(x)))),
     publicGlosses: selectAll(doc, '#searchresults > table p:not(:contains("*")) > a').map(a =>
-      decodeURIComponent(filenameFromURL(relativeLink(pageURL, get.attribute(a, 'href')), '.html'))
+      unslice(decodeURIComponent(filenameFromURL(relativeLink(pageURL, get.attribute(a, 'href')), '.html')))
     ),
     privateGlosses: selectAll(doc, '#searchresults > table p:contains("*") > a').map(a =>
-      decodeURIComponent(filenameFromURL(relativeLink(pageURL, get.attribute(a, 'href')), '.html'))
+      unslice(decodeURIComponent(filenameFromURL(relativeLink(pageURL, get.attribute(a, 'href')), '.html')))
     )
   }
 }

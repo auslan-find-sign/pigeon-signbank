@@ -2,6 +2,7 @@ import fetch from './fetch.mjs'
 import { get } from 'pigeonmark-utils'
 import { selectAll, selectOne } from 'pigeonmark-select'
 import HTML from 'pigeonmark-html'
+import unslice from './unslice.mjs'
 import * as urlRoutes from './url-routes.mjs'
 import './array-at-polyfill.mjs'
 
@@ -38,14 +39,14 @@ export default async function scrapeIDGloss (config, idgloss) {
   const defblock = selectOne(main, 'div#definitionblock')
 
   // get string list of keywords
-  const keywordsString = get.text(selectOne(defblock, '#keywords')).replace(/[\n\t ]+/g, ' ').trim().split(': ')[1]
+  const keywordsString = unslice(get.text(selectOne(defblock, '#keywords')).replace(/[\n\t ]+/g, ' ').trim().split(': ')[1])
   const keywords = keywordsString.split(',').map(x => x.trim())
 
   // note down any region images
-  const regionImages = selectAll(defblock, '#states img').map(image => relativeLink(pageURL, get.attribute(image, 'src')))
+  const regionImages = selectAll(defblock, '#states img').map(image => relativeLink(pageURL, unslice(get.attribute(image, 'src'))))
 
   // extract video urls
-  const videoURLs = selectAll(defblock, 'video source').map(source => relativeLink(pageURL, get.attribute(source, 'src')))
+  const videoURLs = selectAll(defblock, 'video source').map(source => relativeLink(pageURL, unslice(get.attribute(source, 'src'))))
 
   const videoInfos = await Promise.all(videoURLs.map(async url => {
     const response = await fetch(url, { method: 'HEAD' })
@@ -68,14 +69,14 @@ export default async function scrapeIDGloss (config, idgloss) {
     signDemonstrations: videoInfos.filter(({ url }) => !url.match(/Definition/)),
     signedDefinitions: videoInfos.filter(({ url }) => url.match(/Definition/)),
     writtenDefinitions: selectAll(defblock, 'div.definition-panel').map(panel => {
-      const title = get.text(selectOne(panel, 'h3.panel-title')).trim()
+      const title = unslice(get.text(selectOne(panel, 'h3.panel-title')).trim())
 
       const entryDivs = selectAll(panel, 'div.definition-entry > div')
-      const entries = entryDivs.map(div => get.childNodes(div).filter(x => get.type(x) === 'text').map(x => get.text(x).trim()).join(' ').trim())
+      const entries = entryDivs.map(div => get.childNodes(div).filter(x => get.type(x) === 'text').map(x => unslice(get.text(x).trim())).join(' ').trim())
       return { title, entries }
     }),
-    previousSign: filenameFromURL(relativeLink(pageURL, get.attribute(selectOne(signinfo, 'a.btn:contains("Previous Sign")'), 'href')), '.html'),
-    nextSign: filenameFromURL(relativeLink(pageURL, get.attribute(selectOne(signinfo, 'a.btn:contains("Next Sign")'), 'href')), '.html')
+    previousSign: filenameFromURL(relativeLink(pageURL, unslice(get.attribute(selectOne(signinfo, 'a.btn:contains("Previous Sign")'), 'href'))), '.html'),
+    nextSign: filenameFromURL(relativeLink(pageURL, unslice(get.attribute(selectOne(signinfo, 'a.btn:contains("Next Sign")'), 'href'))), '.html')
   }
 
   // discover timestamp from Last Modified header on video

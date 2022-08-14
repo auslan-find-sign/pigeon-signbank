@@ -2,6 +2,7 @@ import fetch from './fetch.mjs'
 import { get } from 'pigeonmark-utils'
 import { selectOne } from 'pigeonmark-select'
 import HTML from 'pigeonmark-html'
+import unslice from './unslice.mjs'
 import './array-at-polyfill.mjs'
 
 /**
@@ -15,7 +16,7 @@ export default async function scrapeSiteInfo (config) {
   const doc = HTML.decode(await response.text())
 
   const welcomeHeading = selectOne(doc, 'h1 > span:contains("Welcome to")')
-  const title = get.text(welcomeHeading).trim().slice('Welcome to'.length).trim()
+  const title = unslice(get.text(welcomeHeading).trim().slice('Welcome to'.length).trim())
 
   return { title }
 }

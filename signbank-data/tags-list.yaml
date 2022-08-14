@@ -1,4 +1,3 @@
-- SEMANTIC
 - b92:directional
 - b92:regional
 - corpus:attested
@@ -46,6 +45,7 @@
 - religion:religion
 - school
 - school:state school
+- SEMANTIC
 - semantic:animal
 - semantic:arithmetic
 - semantic:arts

@@ -50,6 +50,11 @@ const { argv } = yargs(hideBin(process.argv))
     type: 'string',
     description: 'Build search data, write to specified path in find-sign search-data json format, takes a build config yaml file as input'
   })
+  .option('build-flat-file', {
+    alias: 'f',
+    type: 'string',
+    description: 'Path to build a flat json file at, which contains all the signs with tag data merged'
+  })
   .option('export-spreadsheet', {
     type: 'string',
     description: 'Export an Excel .xlsx file to the specified path'
@@ -181,6 +186,26 @@ async function buildSearchData (config) {
   await fs.writeFile(config['build-search-data'], JSON.stringify(searchData))
 }
 
+async function buildFlatFile (config) {
+  const read = async (...p) => yaml.parse((await fs.readFile(config.storage.path(...p))).toString('utf-8'))
+  const siteInfo = await read('site-info.yaml')
+  const idGlossList = await read('id-gloss-list.yaml')
+  const tagGraph = await read('tag-graph.yaml')
+
+  const output = {}
+  for (const idGloss of idGlossList) {
+    const doc = await read('id-gloss', `${idGloss}.yaml`)
+
+    output[idGloss] = {
+      ...doc,
+      regions: doc.regionImages.flatMap(imgUrl => regionImagesMap[imgUrl] || []),
+      tags: tagGraph[idGloss] || [],
+    }
+  }
+
+  await fs.writeFile(config['build-flat-file'], JSON.stringify(output))
+}
+
 /**
  * Reads IDGlosses from storage, outputs data that can be transformed in to an XLSX spreadsheet using xlsx-write-stream
  * @param {*} config
@@ -218,7 +243,7 @@ async function * toXLSXData (config) {
       ).join(', '),
       doc.previousSign,
       doc.nextSign,
-      tagGraph[doc.idGloss].join(', '),
+      (tagGraph[doc.idGloss] || []).join(', '),
       new Date(doc.timestamp),
       doc.writtenDefinitions.flatMap(def =>
         `${def.title}:\n` + def.entries.map((x, i) => ` ${i + 1}. ${x}`).join('\n')
@@ -288,13 +313,14 @@ async function run () {
       }
     }
 
-    // read through every
+    // read through every id-gloss and check for nextGloss and previousGloss values too, to
+    // discover untagged entries
     await fs.ensureDir(argv.storage.path('id-gloss'))
-    for await (const file of await fs.opendir(argv.storage.path('id-gloss'))) {
-      if (file.name.endsWith('.yaml')) {
-        const fileData = await fs.readFile(argv.storage.path('id-gloss', decodeURIComponent(file.name)))
+    for (const idGloss of idGlossSet) {
+      const glossPath = argv.storage.path('id-gloss', `${idGloss}.yaml`)
+      if (await fs.pathExists(glossPath)) {
+        const fileData = await fs.readFile(glossPath)
         const doc = yaml.parse(fileData.toString('utf-8'))
-        idGlossSet.add(doc.idGloss)
         if (doc.nextGloss) idGlossSet.add(doc.nextGloss)
         if (doc.previousGloss) idGlossSet.add(doc.previousGloss)
       }
@@ -334,6 +360,10 @@ async function run () {
 
   if (argv['build-search-data']) {
     await buildSearchData(argv)
+  }
+
+  if (argv['build-flat-file']) {
+    await buildFlatFile(argv)
   }
 
   if (argv['export-spreadsheet']) {
