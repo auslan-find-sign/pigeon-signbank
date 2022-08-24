@@ -49,7 +49,7 @@ export default async function scrapeIDGloss (config, idgloss) {
   const videoURLs = selectAll(defblock, 'video source').map(source => relativeLink(pageURL, unslice(get.attribute(source, 'src'))))
 
   const videoInfos = await Promise.all(videoURLs.map(async url => {
-    const response = await fetch(url, { method: 'HEAD' })
+    const response = await fetch(relativeLink(pageURL, url), { method: 'HEAD' })
     return {
       url,
       available: response.ok,
@@ -81,7 +81,7 @@ export default async function scrapeIDGloss (config, idgloss) {
 
   // discover timestamp from Last Modified header on video
   if (videoInfos.length > 0) {
-    output.timestamp = Math.max(videoInfos.map(x => Date.parse(x.lastModified)))
+    output.timestamp = Math.max(...videoInfos.map(x => Date.parse(x.lastModified)))
   }
 
   return output
