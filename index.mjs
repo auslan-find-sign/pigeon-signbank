@@ -152,7 +152,16 @@ async function buildSearchData (config) {
 
   const searchData = {}
   for (const idGloss of idGlossList) {
-    const doc = await read('id-gloss', `${idGloss}.yaml`)
+    let doc
+    try {
+      doc = await read('id-gloss', `${idGloss}.yaml`)
+    } catch (err) {
+      if (err.code === 'ENOENT') {
+        console.info(`Omiting ${idGloss} due to missing id-gloss file`)
+      } else {
+        throw err
+      }
+    }
 
     searchData[idGloss] = {
       title: doc.keywords.join(', '),
