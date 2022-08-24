@@ -158,6 +158,7 @@ async function buildSearchData (config) {
     } catch (err) {
       if (err.code === 'ENOENT') {
         console.info(`Omiting ${idGloss} due to missing id-gloss file`)
+        continue
       } else {
         throw err
       }
